@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { isEmptyOrNil } from '../common/utils/functions';
 
+import { isEmptyOrNil } from '../common/utils/functions';
 import { CreateDeviceDto, DeviceFiltersDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 import { Device, DeviceDocument } from './entities/device.entity';
@@ -127,6 +127,8 @@ export class DevicesService implements OnModuleInit {
       if (!device) {
         throw new NotFoundException(`Device with id: ${id} not found!`);
       }
+
+      // Here we could implement the logic for deleting the devices form the gateway's array of peripheral devices
 
       return await this.deviceModel.findByIdAndRemove(id).exec();
     } catch (error) {

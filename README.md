@@ -1,30 +1,6 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+<!-- ## Description
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Nest](https://github.com/nestjs/nest)
 
 ## Installation
 
@@ -51,23 +27,118 @@ $ npm run start:prod
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
+# test coverage
+$ npm run test:cov
+``` -->
+
+## Gateway Management REST Service
+This project is a REST service built using Node.js and MongoDB for storing and managing information about gateways and their associated devices.
+
+# Table of Contents
+- Installation
+- Usage
+- API Endpoints
+- Deployment
+- Testing
+- Technologies Used
+
+## Installation
+
+```bash
+$ npm install
+```
+
+## Running the app
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+## Usage
+
+After starting the server, you can access the API endpoints using a tool like Postman or through the [UI provided](https://jst4rk.github.io/gw-ui/).
+
+The UI provides a simple interface for adding, removing, and viewing gateways and their associated devices.
+
+## API Endpoints
+### Gateways
+- GET /gateways: returns a list of all the stored gateways and their devices.
+- POST /gateways: adds a new gateway to the database.
+  ```
+  {
+    "serialId": "0000487",
+    "name": "Gateway 1",
+    "ipv4Address": "192.168.0.1",
+    "peripheralDevices": [
+      "64219cd591b193269f690da7",
+      "64219ce391b193269f690dab",
+      "64219cf991b193269f690daf"
+    ]
+  }
+  ```
+- GET /gateways/:id: returns details for a single gateway with the specified mongo ObjectId.
+- PACTH /gateways/:id: update a gateway with the specified mongo ObjectId.
+  ```
+    {
+      "serialId": "0000487",
+      "name": "Gateway 1",
+      "ipv4Address": "192.168.0.1",
+      "peripheralDevices": [
+        "64219cd591b193269f690da7",
+        "64219ce391b193269f690dab",
+        "64219cf991b193269f690daf"
+      ]
+    }
+  ```
+- DELETE /gateways/:id removes a gateway with the specified mongo ObjectId.
+
+### Devices
+- GET /devices: returns a list of all the stored devices.
+- POST /devices: adds a new device to the database.
+  ```
+  {
+    "uid": "658498v",
+    "vendor": "Elavon",
+    "createdAt": "2023-02-05T07:30:00.000Z",
+    "status": "offline"
+  }
+  ```
+- GET /devices/:id: returns details for a single device with the specified mongo ObjectId.
+- PACTH /devices/:id: update a device with the specified mongo ObjectId.
+  ```
+  {
+    "uid": "658498v",
+    "vendor": "Elavon",
+    "createdAt": "2023-02-05T07:30:00.000Z",
+    "status": "offline"
+  }
+  ```
+- DELETE /devices/:id removes a device with the specified mongo ObjectId.
+
+## Deployment
+This project is automatically deployed to Heroku every time changes are pushed to the main branch. https://gw-api.herokuapp.com/
+
+## Testing
+
+```bash
+# unit tests
+$ npm run test
 
 # test coverage
 $ npm run test:cov
 ```
 
-## Support
+## Technologies Used
+- Node.js ([NestJs](https://github.com/nestjs/nest))
+- MongoDB
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+## Author
+Dayron Alfaro
