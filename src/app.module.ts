@@ -9,9 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [
     // * I'm goind to hardcode here the mongodb url for testing
     // but this must be in a env var
-    MongooseModule.forRoot(
-      'mongodb+srv://dayronalfa:Ogmi2QEUobJmGXLV@cluster0.vl6unu2.mongodb.net/musalasoft?retryWrites=true&w=majority',
-    ),
+    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://localhost/musalasoft'),
     // * Uncomment this for test in a local environment
     // * MongooseModule.forRoot('mongodb://localhost/musalasoft'),
     GatewaysModule,
