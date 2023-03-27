@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+  OnModuleInit,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -10,7 +16,9 @@ import { Gateway, GatewayDocument } from './entities/gateway.entity';
 // I'll handle the database logic here for simplicity, but I like having a .repository.ts file to handle all the database logic separately
 @Injectable()
 export class GatewaysService implements OnModuleInit {
-  constructor(@InjectModel(Gateway.name) private gatewayModel: Model<GatewayDocument>) { }
+  constructor(
+    @InjectModel(Gateway.name) private gatewayModel: Model<GatewayDocument>,
+  ) {}
 
   // For this demo, this is a nice way to create indexes
   // note that the index creation process could have an impact on application performance
@@ -24,22 +32,31 @@ export class GatewaysService implements OnModuleInit {
       // This can be implemented in a custom validator used in the dto
       // I will do it here for simplicity
       if (!isValidIPv4(createGatewayDto.ipv4Address)) {
-        throw new Error(`Invalid IP Address format: ${createGatewayDto.ipv4Address}`);
+        throw new Error(
+          `Invalid IP Address format: ${createGatewayDto.ipv4Address}`,
+        );
       }
 
       if (createGatewayDto?.peripheralDevices.length > 10) {
-        throw new Error(`The Maximun number of associated devices are 10. But you sent: ${createGatewayDto?.peripheralDevices.length}`);
+        throw new Error(
+          `The Maximun number of associated devices are 10. But you sent: ${createGatewayDto?.peripheralDevices.length}`,
+        );
       }
 
       const createdGateway = await this.gatewayModel.create(createGatewayDto);
 
       return createdGateway.populate('peripheralDevices');
     } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
-  async findAll(filters: GatewayFiltersDto): Promise<{ data: Gateway[], meta: { total: number } }> {
+  async findAll(
+    filters: GatewayFiltersDto,
+  ): Promise<{ data: Gateway[]; meta: { total: number } }> {
     try {
       const page = +filters.page;
       const limit = +filters.limit;
@@ -50,7 +67,8 @@ export class GatewaysService implements OnModuleInit {
       }
 
       const count = await this.gatewayModel.countDocuments().exec();
-      const data = await this.gatewayModel.find()
+      const data = await this.gatewayModel
+        .find()
         .skip(page * limit)
         .limit(limit)
         .populate('peripheralDevices')
@@ -60,11 +78,14 @@ export class GatewaysService implements OnModuleInit {
       return {
         data,
         meta: {
-          total: count
-        }
-      }
+          total: count,
+        },
+      };
     } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -78,11 +99,17 @@ export class GatewaysService implements OnModuleInit {
 
       return await gateway.populate('peripheralDevices');
     } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
-  async update(id: string, updateGatewayDto: UpdateGatewayDto): Promise<Gateway> {
+  async update(
+    id: string,
+    updateGatewayDto: UpdateGatewayDto,
+  ): Promise<Gateway> {
     try {
       // The update method could be more complex as the UI could send only the fields that have been updated
       // then we need to merge the old document with the new data, this could easily be done with ramda or another
@@ -97,18 +124,26 @@ export class GatewaysService implements OnModuleInit {
       // This can be implemented in a custom validator used in the dto
       // I will do it here for simplicity
       if (!isValidIPv4(updateGatewayDto.ipv4Address)) {
-        throw new Error(`Invalid IP Address format: ${updateGatewayDto.ipv4Address}`);
+        throw new Error(
+          `Invalid IP Address format: ${updateGatewayDto.ipv4Address}`,
+        );
       }
 
       if (updateGatewayDto?.peripheralDevices.length > 10) {
-        throw new Error(`The Maximun number of associated devices are 10. But you sent: ${updateGatewayDto?.peripheralDevices.length}`);
+        throw new Error(
+          `The Maximun number of associated devices are 10. But you sent: ${updateGatewayDto?.peripheralDevices.length}`,
+        );
       }
 
-      return await this.gatewayModel.findByIdAndUpdate(id, updateGatewayDto, { new: true })
+      return await this.gatewayModel
+        .findByIdAndUpdate(id, updateGatewayDto, { new: true })
         .populate('peripheralDevices')
         .exec();
     } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -123,7 +158,10 @@ export class GatewaysService implements OnModuleInit {
 
       return await this.gatewayModel.findByIdAndRemove(id).exec();
     } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

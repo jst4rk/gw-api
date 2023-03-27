@@ -21,22 +21,22 @@ describe('DevicesService', () => {
     limit: jest.fn().mockReturnThis(),
     populate: jest.fn().mockReturnThis(),
     sort: jest.fn().mockReturnThis(),
-    exec: jest.fn().mockResolvedValue([mockGateway])
+    exec: jest.fn().mockResolvedValue([mockGateway]),
   });
 
   const mockGatewayModel = {
     create: jest.fn().mockImplementation(() => ({
-      populate: jest.fn().mockResolvedValue(mockGateway)
+      populate: jest.fn().mockResolvedValue(mockGateway),
     })),
     countDocuments: jest.fn().mockImplementation(() => ({
-      exec: jest.fn().mockResolvedValue(10)
+      exec: jest.fn().mockResolvedValue(10),
     })),
     find: jest.fn().mockImplementation(mockFind),
     findById: jest.fn().mockReturnThis(),
     findByIdAndUpdate: jest.fn().mockReturnThis(),
     findByIdAndRemove: jest.fn().mockReturnThis(),
     populate: jest.fn().mockImplementation(() => ({
-      exec: jest.fn().mockResolvedValue(mockGateway)
+      exec: jest.fn().mockResolvedValue(mockGateway),
     })),
   };
 
@@ -69,7 +69,9 @@ describe('DevicesService', () => {
         peripheralDevices: ['641d23d23f956a7740d741df'],
       };
 
-      await expect(service.create(createGatewayDto)).rejects.toThrowError(`Invalid IP Address format: ${createGatewayDto.ipv4Address}`);
+      await expect(service.create(createGatewayDto)).rejects.toThrowError(
+        `Invalid IP Address format: ${createGatewayDto.ipv4Address}`,
+      );
     });
 
     it('should throw an error if the number of peripheral devices exceeds the maximum allowed', async () => {
@@ -77,16 +79,21 @@ describe('DevicesService', () => {
         serialId: 'qwer2134',
         name: 'Test Gateway',
         ipv4Address: '192.168.1.1',
-        peripheralDevices: Array.from({ length: 11 }, (_, i) => (`device_id_${i}`)),
+        peripheralDevices: Array.from(
+          { length: 11 },
+          (_, i) => `device_id_${i}`,
+        ),
       };
 
-      await expect(service.create(createGatewayDto))
-        .rejects
-        .toThrowError(`The Maximun number of associated devices are 10. But you sent: ${createGatewayDto.peripheralDevices.length}`);
+      await expect(service.create(createGatewayDto)).rejects.toThrowError(
+        `The Maximun number of associated devices are 10. But you sent: ${createGatewayDto.peripheralDevices.length}`,
+      );
     });
 
     it('should throw HttpException if there is an error', async () => {
-      mockGatewayModel.create.mockImplementationOnce(() => { throw new Error('Internal server error') });
+      mockGatewayModel.create.mockImplementationOnce(() => {
+        throw new Error('Internal server error');
+      });
       await expect(service.create(mockGateway)).rejects.toThrow(HttpException);
     });
   });
@@ -95,7 +102,7 @@ describe('DevicesService', () => {
     it('should return all gateways', async () => {
       const filters: GatewayFiltersDto = {};
       mockGatewayModel.populate.mockImplementationOnce(() => ({
-        exec: jest.fn().mockResolvedValueOnce([mockGateway])
+        exec: jest.fn().mockResolvedValueOnce([mockGateway]),
       }));
       const result = await service.findAll(filters);
       expect(result).toEqual({ data: [mockGateway], meta: { total: 10 } });
@@ -103,7 +110,9 @@ describe('DevicesService', () => {
     });
 
     it('should throw HttpException if there is an error', async () => {
-      mockGatewayModel.find.mockImplementationOnce(() => { throw new Error('Internal server error') })
+      mockGatewayModel.find.mockImplementationOnce(() => {
+        throw new Error('Internal server error');
+      });
       const filters: GatewayFiltersDto = {};
       await expect(service.findAll(filters)).rejects.toThrow(HttpException);
     });
@@ -114,7 +123,7 @@ describe('DevicesService', () => {
       const gatewayId = 'some-gateway-id';
       mockGatewayModel.findById.mockImplementationOnce(() => ({
         exec: jest.fn().mockImplementationOnce(() => ({
-          populate: jest.fn().mockResolvedValueOnce(mockGateway)
+          populate: jest.fn().mockResolvedValueOnce(mockGateway),
         })),
       }));
       const result = await service.findOne(gatewayId);
@@ -124,14 +133,18 @@ describe('DevicesService', () => {
 
     it('should throw NotFoundException if the gateway is not found', async () => {
       mockGatewayModel.findById.mockImplementationOnce(() => ({
-        exec: jest.fn().mockResolvedValueOnce(null)
+        exec: jest.fn().mockResolvedValueOnce(null),
       }));
       const gatewayId = 'some-gateway-id';
-      await expect(service.findOne(gatewayId)).rejects.toThrow(`Gateway with id: ${gatewayId} not found!`);
+      await expect(service.findOne(gatewayId)).rejects.toThrow(
+        `Gateway with id: ${gatewayId} not found!`,
+      );
     });
 
     it('should throw HttpException if there is an error', async () => {
-      mockGatewayModel.findById.mockImplementationOnce(() => { throw new Error('Internal server error') })
+      mockGatewayModel.findById.mockImplementationOnce(() => {
+        throw new Error('Internal server error');
+      });
       const gatewayId = 'some-gateway-id';
       await expect(service.findOne(gatewayId)).rejects.toThrow(HttpException);
     });
@@ -148,17 +161,21 @@ describe('DevicesService', () => {
       };
 
       mockGatewayModel.findById.mockImplementationOnce(() => ({
-        exec: jest.fn().mockResolvedValueOnce(mockGateway)
+        exec: jest.fn().mockResolvedValueOnce(mockGateway),
       }));
       mockGatewayModel.findByIdAndUpdate.mockImplementationOnce(() => ({
         populate: jest.fn().mockImplementationOnce(() => ({
-          exec: jest.fn().mockResolvedValueOnce(updateGatewayDto)
+          exec: jest.fn().mockResolvedValueOnce(updateGatewayDto),
         })),
       }));
       const result = await service.update(mockGateway._id, updateGatewayDto);
 
       expect(mockGatewayModel.findById).toHaveBeenCalledWith(mockGateway._id);
-      expect(mockGatewayModel.findByIdAndUpdate).toHaveBeenCalledWith(mockGateway._id, updateGatewayDto, { new: true });
+      expect(mockGatewayModel.findByIdAndUpdate).toHaveBeenCalledWith(
+        mockGateway._id,
+        updateGatewayDto,
+        { new: true },
+      );
       expect(result).toEqual(updateGatewayDto);
     });
 
@@ -170,7 +187,9 @@ describe('DevicesService', () => {
         peripheralDevices: ['641d23d23f956a7740d741df'],
       };
 
-      await expect(service.create(createGatewayDto)).rejects.toThrowError(`Invalid IP Address format: ${createGatewayDto.ipv4Address}`);
+      await expect(service.create(createGatewayDto)).rejects.toThrowError(
+        `Invalid IP Address format: ${createGatewayDto.ipv4Address}`,
+      );
     });
 
     it('should throw an error if the number of peripheral devices exceeds the maximum allowed', async () => {
@@ -178,12 +197,15 @@ describe('DevicesService', () => {
         serialId: 'qwer2134',
         name: 'Test Gateway',
         ipv4Address: '192.168.1.1',
-        peripheralDevices: Array.from({ length: 11 }, (_, i) => (`device_id_${i}`)),
+        peripheralDevices: Array.from(
+          { length: 11 },
+          (_, i) => `device_id_${i}`,
+        ),
       };
 
-      await expect(service.create(createGatewayDto))
-        .rejects
-        .toThrowError(`The Maximun number of associated devices are 10. But you sent: ${createGatewayDto.peripheralDevices.length}`);
+      await expect(service.create(createGatewayDto)).rejects.toThrowError(
+        `The Maximun number of associated devices are 10. But you sent: ${createGatewayDto.peripheralDevices.length}`,
+      );
     });
 
     it('should throw a NotFoundException when the gateway is not found', async () => {
@@ -196,35 +218,41 @@ describe('DevicesService', () => {
       };
 
       mockGatewayModel.findById.mockImplementationOnce(() => ({
-        exec: jest.fn().mockResolvedValueOnce(null)
+        exec: jest.fn().mockResolvedValueOnce(null),
       }));
 
-      await expect(service.update(mockGateway._id, updateDeviceDto)).rejects.toThrow(`Gateway with id: ${mockGateway._id} not found!`);
+      await expect(
+        service.update(mockGateway._id, updateDeviceDto),
+      ).rejects.toThrow(`Gateway with id: ${mockGateway._id} not found!`);
     });
   });
 
   describe('remove', () => {
     it('should remove a gateway', async () => {
       mockGatewayModel.findById.mockImplementationOnce(() => ({
-        exec: jest.fn().mockResolvedValueOnce(mockGateway)
+        exec: jest.fn().mockResolvedValueOnce(mockGateway),
       }));
       mockGatewayModel.findByIdAndRemove.mockImplementationOnce(() => ({
-        exec: jest.fn().mockResolvedValueOnce(mockGateway)
+        exec: jest.fn().mockResolvedValueOnce(mockGateway),
       }));
 
       const result = await service.remove(mockGateway._id);
 
       expect(mockGatewayModel.findById).toHaveBeenCalledWith(mockGateway._id);
-      expect(mockGatewayModel.findByIdAndRemove).toHaveBeenCalledWith(mockGateway._id);
+      expect(mockGatewayModel.findByIdAndRemove).toHaveBeenCalledWith(
+        mockGateway._id,
+      );
       expect(result).toEqual(mockGateway);
     });
 
     it('should throw a NotFoundException when the gateway is not found', async () => {
       mockGatewayModel.findById.mockImplementationOnce(() => ({
-        exec: jest.fn().mockResolvedValueOnce(null)
+        exec: jest.fn().mockResolvedValueOnce(null),
       }));
 
-      await expect(service.remove(mockGateway._id)).rejects.toThrow(`Gateway with id: ${mockGateway._id} not found!`);
+      await expect(service.remove(mockGateway._id)).rejects.toThrow(
+        `Gateway with id: ${mockGateway._id} not found!`,
+      );
     });
   });
 });

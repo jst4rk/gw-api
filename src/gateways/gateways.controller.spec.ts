@@ -13,7 +13,7 @@ describe('GatewaysController', () => {
     findDepositGrouped: jest.fn(() => new Promise((resolve) => resolve({}))),
     findFundAmt: jest.fn(() => new Promise((resolve) => resolve({}))),
     findDepositDetail: jest.fn(() => new Promise((resolve) => resolve({}))),
-};
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,7 +22,7 @@ describe('GatewaysController', () => {
         {
           provide: GatewaysService,
           useValue: mockGatewaysService,
-        }
+        },
       ],
     }).compile();
 

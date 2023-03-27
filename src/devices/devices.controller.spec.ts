@@ -5,18 +5,16 @@ import { DevicesService } from './devices.service';
 describe('DevicesController', () => {
   let controller: DevicesController;
 
-  const mockDevicesService = {
-
-  }
+  const mockDevicesService = {};
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [DevicesController],
       providers: [
         {
-         provide: DevicesService,
-         useValue: mockDevicesService 
-        }
+          provide: DevicesService,
+          useValue: mockDevicesService,
+        },
       ],
     }).compile();
 

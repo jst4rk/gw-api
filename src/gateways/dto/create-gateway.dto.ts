@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsString, IsArray, IsOptional } from 'class-validator';
 
-
 export class CreateGatewayDto {
   @IsString()
   @IsNotEmpty()
@@ -33,7 +32,7 @@ export class GatewayFiltersDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  //* Here we do not need to validate it because 
+  //* Here we do not need to validate it because
   //* we may want to search like "192.168" and bring all matching result
   readonly ipv4Address?: string;
 
@@ -43,7 +42,7 @@ export class GatewayFiltersDto {
 
   @IsOptional()
   readonly page?: number;
-  
+
   @IsOptional()
   readonly skip?: number;
 

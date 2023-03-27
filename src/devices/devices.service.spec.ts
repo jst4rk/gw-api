@@ -20,7 +20,7 @@ describe('DevicesService', () => {
     create: jest.fn().mockResolvedValue(mockDevice),
     find: jest.fn().mockReturnThis(),
     countDocuments: jest.fn().mockImplementation(() => ({
-      exec: jest.fn().mockResolvedValue(10)
+      exec: jest.fn().mockResolvedValue(10),
     })),
     findById: jest.fn().mockReturnThis(),
     findByIdAndUpdate: jest.fn().mockReturnThis(),
@@ -53,7 +53,9 @@ describe('DevicesService', () => {
     });
 
     it('should throw HttpException if there is an error', async () => {
-      jest.spyOn(mockDeviceModel, 'create').mockRejectedValue(new Error('Internal server error'));
+      jest
+        .spyOn(mockDeviceModel, 'create')
+        .mockRejectedValue(new Error('Internal server error'));
       await expect(service.create(mockDevice)).rejects.toThrow(HttpException);
     });
   });
@@ -61,14 +63,16 @@ describe('DevicesService', () => {
   describe('findAll', () => {
     it('should return all devices', async () => {
       const filters: DeviceFiltersDto = {};
-      mockDeviceModel.exec.mockResolvedValueOnce([mockDevice])
+      mockDeviceModel.exec.mockResolvedValueOnce([mockDevice]);
       const result = await service.findAll(filters);
       expect(result).toEqual({ data: [mockDevice], meta: { total: 10 } });
       expect(mockDeviceModel.find).toHaveBeenCalledWith();
     });
 
     it('should throw HttpException if there is an error', async () => {
-      mockDeviceModel.find.mockImplementationOnce(() => { throw new Error('Internal server error') })
+      mockDeviceModel.find.mockImplementationOnce(() => {
+        throw new Error('Internal server error');
+      });
       const filters: DeviceFiltersDto = {};
       await expect(service.findAll(filters)).rejects.toThrow(HttpException);
     });
@@ -85,11 +89,15 @@ describe('DevicesService', () => {
     it('should throw NotFoundException if the device is not found', async () => {
       mockDeviceModel.exec.mockResolvedValueOnce(null);
       const deviceId = 'some-device-id';
-      await expect(service.findOne(deviceId)).rejects.toThrow(`Device with id: ${deviceId} not found!`);
+      await expect(service.findOne(deviceId)).rejects.toThrow(
+        `Device with id: ${deviceId} not found!`,
+      );
     });
 
     it('should throw HttpException if there is an error', async () => {
-      mockDeviceModel.findById.mockImplementationOnce(() => { throw new Error('Internal server error') });
+      mockDeviceModel.findById.mockImplementationOnce(() => {
+        throw new Error('Internal server error');
+      });
       const deviceId = 'some-device-id';
       await expect(service.findOne(deviceId)).rejects.toThrow(HttpException);
     });
@@ -106,12 +114,16 @@ describe('DevicesService', () => {
       };
 
       mockDeviceModel.findByIdAndUpdate.mockImplementationOnce(() => ({
-        exec: jest.fn().mockResolvedValueOnce(updateDeviceDto)
+        exec: jest.fn().mockResolvedValueOnce(updateDeviceDto),
       }));
       const result = await service.update(mockDevice._id, updateDeviceDto);
 
       expect(mockDeviceModel.findById).toHaveBeenCalledWith(mockDevice._id);
-      expect(mockDeviceModel.findByIdAndUpdate).toHaveBeenCalledWith(mockDevice._id, updateDeviceDto, { new: true });
+      expect(mockDeviceModel.findByIdAndUpdate).toHaveBeenCalledWith(
+        mockDevice._id,
+        updateDeviceDto,
+        { new: true },
+      );
       expect(result).toEqual(updateDeviceDto);
     });
 
@@ -126,7 +138,9 @@ describe('DevicesService', () => {
 
       mockDeviceModel.exec.mockResolvedValueOnce(null);
 
-      await expect(service.update(mockDevice._id, updateDeviceDto)).rejects.toThrow(`Device with id: ${mockDevice._id} not found!`);
+      await expect(
+        service.update(mockDevice._id, updateDeviceDto),
+      ).rejects.toThrow(`Device with id: ${mockDevice._id} not found!`);
     });
   });
 
@@ -135,14 +149,18 @@ describe('DevicesService', () => {
       const result = await service.remove(mockDevice._id);
 
       expect(mockDeviceModel.findById).toHaveBeenCalledWith(mockDevice._id);
-      expect(mockDeviceModel.findByIdAndRemove).toHaveBeenCalledWith(mockDevice._id);
+      expect(mockDeviceModel.findByIdAndRemove).toHaveBeenCalledWith(
+        mockDevice._id,
+      );
       expect(result).toEqual(mockDevice);
     });
 
     it('should throw a NotFoundException when the device is not found', async () => {
       mockDeviceModel.exec.mockResolvedValueOnce(null);
 
-      await expect(service.remove(mockDevice._id)).rejects.toThrow(`Device with id: ${mockDevice._id} not found!`);
+      await expect(service.remove(mockDevice._id)).rejects.toThrow(
+        `Device with id: ${mockDevice._id} not found!`,
+      );
     });
   });
 });

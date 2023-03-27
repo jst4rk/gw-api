@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+  OnModuleInit,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { isEmptyOrNil } from '../common/utils/functions';
@@ -10,7 +16,9 @@ import { Device, DeviceDocument } from './entities/device.entity';
 // I'll handle the database logic here for simplicity, but I like having a .repository.ts file to handle all the database logic separately
 @Injectable()
 export class DevicesService implements OnModuleInit {
-  constructor(@InjectModel(Device.name) private deviceModel: Model<DeviceDocument>) { }
+  constructor(
+    @InjectModel(Device.name) private deviceModel: Model<DeviceDocument>,
+  ) {}
 
   // For this demo, this is a nice way to create indexes
   // note that the index creation process could have an impact on application performance
@@ -25,11 +33,16 @@ export class DevicesService implements OnModuleInit {
 
       return createdDevice;
     } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
-  async findAll(filters: DeviceFiltersDto): Promise<{ data: Device[], meta: { total: number } }> {
+  async findAll(
+    filters: DeviceFiltersDto,
+  ): Promise<{ data: Device[]; meta: { total: number } }> {
     try {
       // const count = await this.deviceModel.countDocuments().exec();
       // const data = await this.deviceModel.find().exec();
@@ -50,7 +63,8 @@ export class DevicesService implements OnModuleInit {
       }
 
       const count = await this.deviceModel.countDocuments().exec();
-      const data = await this.deviceModel.find()
+      const data = await this.deviceModel
+        .find()
         .skip(page * limit)
         .limit(limit)
         .sort(sort)
@@ -59,11 +73,14 @@ export class DevicesService implements OnModuleInit {
       return {
         data,
         meta: {
-          total: count
-        }
-      }
+          total: count,
+        },
+      };
     } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -77,7 +94,10 @@ export class DevicesService implements OnModuleInit {
 
       return device;
     } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -89,9 +109,14 @@ export class DevicesService implements OnModuleInit {
         throw new NotFoundException(`Device with id: ${id} not found!`);
       }
 
-      return await this.deviceModel.findByIdAndUpdate(id, updateDeviceDto, { new: true }).exec();
+      return await this.deviceModel
+        .findByIdAndUpdate(id, updateDeviceDto, { new: true })
+        .exec();
     } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -105,7 +130,10 @@ export class DevicesService implements OnModuleInit {
 
       return await this.deviceModel.findByIdAndRemove(id).exec();
     } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }
