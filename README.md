@@ -48,7 +48,7 @@ $ npm install
 ```
 ## Test Data
 
-You need to have MongoDB installed on your system, you can do it following this [link](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#install-mongodb-community-edition). Dowloand and install the correct version for your OS. Once you have MongoDB installed you need to import he devices.json into the devices collection. You can find the device.json file in the root of the project repo.
+You need to have MongoDB installed on your system, you can do it following this [link](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#install-mongodb-community-edition). Dowloand and install the correct version for your OS. Once you have MongoDB installed you need to import the devices.json file into the devices collection. You can find the device.json file in the root of the project repo.
 
 ## Running the app
 
