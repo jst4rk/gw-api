@@ -1,0 +1,217 @@
+[{
+  "_id": {
+    "$oid": "642199eb91b193269f690d8f"
+  },
+  "uid": 1000001,
+  "vendor": "Vendor 1",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "online",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219a0591b193269f690d93"
+  },
+  "uid": 1000002,
+  "vendor": "Vendor 2",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "offline",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219cd591b193269f690da7"
+  },
+  "uid": 1000003,
+  "vendor": "Vendor 3",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "online",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219ce391b193269f690dab"
+  },
+  "uid": 1000004,
+  "vendor": "Vendor 4",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "online",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219cf991b193269f690daf"
+  },
+  "uid": 1000005,
+  "vendor": "Vendor 5",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "offline",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219d333016c83d18decf99"
+  },
+  "uid": 1000006,
+  "vendor": "Vendor 6",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "online",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219d3a3016c83d18decf9a"
+  },
+  "uid": 1000007,
+  "vendor": "Vendor 7\n",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "online",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219d413016c83d18decf9b"
+  },
+  "uid": 1000008,
+  "vendor": "Vendor 8",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "online",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219d6b3016c83d18decf9c"
+  },
+  "uid": 1000009,
+  "vendor": "Vendor 9",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "online",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219d783016c83d18decf9d"
+  },
+  "uid": 10000010,
+  "vendor": "Vendor 10",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "online",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219d993016c83d18decf9e"
+  },
+  "uid": 10000011,
+  "vendor": "Vendor 11",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "online",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64219db53016c83d18decf9f"
+  },
+  "uid": 10000012,
+  "vendor": "Vendor 12",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "status": "online",
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679889600000"
+    }
+  },
+  "__v": 0
+}]
