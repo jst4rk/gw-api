@@ -124,9 +124,6 @@ The UI provides a simple interface for adding, removing, and viewing gateways an
   ```
 - DELETE /devices/:id removes a device with the specified mongo ObjectId.
 
-## Deployment
-This project is automatically deployed to Heroku every time changes are pushed to the main branch. https://gw-api.herokuapp.com/
-
 ## Testing
 
 ```bash
